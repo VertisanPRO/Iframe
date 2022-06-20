@@ -1,0 +1,13 @@
+{
+    "general/add_errors": "Add error! All fields are required",
+    "general/add_iframe": "<i class=\"fa fa-plus-circle\"><\/i> Add Iframe",
+    "general/edit_errors": "Edit error",
+    "general/footer_description": "Footer Content",
+    "general/group_permission": "Full access to the module Iframe",
+    "general/iframe": "Iframe",
+    "general/iframe_size": "Iframe size",
+    "general/no_iframe": "No added iframes",
+    "general/required_matches_errors": "URL must start with \"\/\"",
+    "general/src": "Iframe URL",
+    "general/title": "Iframe"
+}
