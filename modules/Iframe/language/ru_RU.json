@@ -1,13 +1,13 @@
 {
     "general/add_errors": "Ошибка добавления! Все поля обязательны для заполнения",
-    "general/add_iframe": "Добавить iframe",
+    "general/add_iframe": "<i class=\"fa fa-plus-circle\"></i> Добавить iframe",
     "general/edit_errors": "Ошибка редактирования",
     "general/footer_description": "Footer Контент",
     "general/group_permission": "Полный доступ к модулю Iframe",
     "general/iframe": "Iframe",
     "general/iframe_size": "Размер iframe",
     "general/no_iframe": "Нет добавленных iframes",
-    "general/required_matches_errors": "URL должен начинаться с \"\/\"",
+    "general/required_matches_errors": "URL должен начинаться с \"/\"",
     "general/src": "URL-адрес iframe",
     "general/title": "Iframe"
 }
