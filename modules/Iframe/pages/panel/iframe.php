@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpStanGlobal */
+<?php
 /*
  *  Made by Samerton
  *  https://github.com/NamelessMC/Nameless/tree/v2/

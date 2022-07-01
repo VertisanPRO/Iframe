@@ -29,8 +29,6 @@ class Iframe extends Module
         $pages->add('Iframe', '/panel/iframe', 'pages/panel/iframe.php');
         $pages->add('Iframe', '/panel/iframe/setting', 'pages/panel/setting.php');
 
-        $queries = new Queries();
-
         if (DB::getInstance()->showTables('iframe_pages') || DB::getInstance()->showTables('iframe_data')) {
 
             $iframes_pages = DB::getInstance()->get('iframe_pages', ['id', '<>', 0])->results();
@@ -45,16 +43,6 @@ class Iframe extends Module
 
     public function onInstall()
     {
-        // Queries
-
-        try {
-
-            $data = DB::getInstance()->createTable("iframe_pages", " `id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, `url` varchar(255) NOT NULL, PRIMARY KEY (`id`)", "ENGINE=InnoDB DEFAULT CHARSET=utf8");
-
-            $data = DB::getInstance()->createTable("iframe_data", " `id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, `src` varchar(5000) NOT NULL, `iframe_size` varchar(255) NOT NULL, `page_id` int(11) NOT NULL, `description` text NOT NULL, `footer_description` text NOT NULL, PRIMARY KEY (`id`)", "ENGINE=InnoDB DEFAULT CHARSET=utf8");
-        } catch (Exception $e) {
-            // Error
-        }
     }
 
     public function onUninstall()
@@ -65,7 +53,8 @@ class Iframe extends Module
     {
 
         try {
-
+            DB::getInstance()->createTable("iframe_pages", " `id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, `url` varchar(255) NOT NULL, PRIMARY KEY (`id`)");
+            DB::getInstance()->createTable("iframe_data", " `id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, `src` varchar(5000) NOT NULL, `iframe_size` varchar(255) NOT NULL, `page_id` int(11) NOT NULL, `description` text NOT NULL, `footer_description` text NOT NULL, PRIMARY KEY (`id`)");
             $group = DB::getInstance()->get('groups', ['id', '=', 2])->results();
             $group = $group[0];
 
@@ -97,7 +86,7 @@ class Iframe extends Module
 
             if ($user->hasPermission('admincp.iframe')) {
 
-                $navs[2]->add('iframe_divider', mb_strtoupper($title, 'UTF-8'), 'divider', 'top', null, $order, '');
+                $navs[2]->add('iframe_divider', mb_strtoupper($title, 'UTF-8'), 'divider', 'top', null, $order);
 
                 $navs[2]->add('iframe_items', $title, URL::build('/panel/iframe'), 'top', null, $order + 0.1, $icon);
             }
