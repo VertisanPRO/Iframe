@@ -37,8 +37,8 @@ const PANEL_PAGE = 'iframe_items';
 require_once(ROOT_PATH . '/core/templates/backend_init.php');
 
 $iframes = DB::getInstance()->get('iframe_data', ['page_id', '=', $_GET['id']])->results();
+$iframes_list = [];
 if (count($iframes)) {
-    $iframes_list = [];
     foreach ($iframes as $iframe) {
         $iframes_list[] = [
             'edit_link' => URL::build('/panel/iframe/setting', 'action=frame_edit&name=' . Output::getClean($iframe->id)),
@@ -50,10 +50,11 @@ if (count($iframes)) {
             'page_id' => $iframe->page_id,
         ];
     }
-    $smarty->assign([
-        'IFRAME_LIST' => $iframes_list
-    ]);
-}
+};
+
+$smarty->assign([
+    'IFRAME_LIST' => $iframes_list
+]);
 
 $smarty->assign([
     'SUBMIT' => $language->get('general', 'submit'),
