@@ -1,4 +1,4 @@
-# Iframe Module 1.3.0
+# Iframe Module 1.3.1
 ## Upload
 Upload "custom" and the "modules" folder to your NamelessMC Root directory (public_html, html, htdocs)
 
