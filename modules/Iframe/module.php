@@ -54,7 +54,7 @@ class Iframe extends Module
 
         try {
             DB::getInstance()->createTable("iframe_pages", " `id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, `url` varchar(255) NOT NULL, PRIMARY KEY (`id`)");
-            DB::getInstance()->createTable("iframe_data", " `id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, `src` varchar(5000) NOT NULL, `iframe_size` varchar(255) NOT NULL, `page_id` int(11) NOT NULL, `description` text NOT NULL, `footer_description` text NOT NULL, PRIMARY KEY (`id`)");
+            DB::getInstance()->createTable("iframe_data", " `id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, `src` varchar(5000) NOT NULL, `iframe_size` varchar(255) NOT NULL, `page_id` int(11) NOT NULL, `description` text NULL, `footer_description` text NULL, PRIMARY KEY (`id`)");
             $group = DB::getInstance()->get('groups', ['id', '=', 2])->results();
             $group = $group[0];
 
