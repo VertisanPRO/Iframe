@@ -36,8 +36,8 @@ require_once(ROOT_PATH . '/core/templates/backend_init.php');
 
 
 $iframes_pages = DB::getInstance()->get('iframe_pages', ['id', '<>', 0])->results();
+$pages_list = [];
 if (count($iframes_pages)) {
-    $pages_list = [];
     foreach ($iframes_pages as $page) {
         $pages_list[] = [
             'edit_link' => URL::build('/panel/iframe', 'action=edit&id=' . Output::getClean($page->id)),
@@ -48,10 +48,11 @@ if (count($iframes_pages)) {
             'url' => $page->url
         ];
     }
-    $smarty->assign([
-        'PAGES_LIST' => $pages_list
-    ]);
-}
+};
+
+$smarty->assign([
+    'PAGES_LIST' => $pages_list
+]);
 
 $smarty->assign([
     'SUBMIT' => $language->get('general', 'submit'),
