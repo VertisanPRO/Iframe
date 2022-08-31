@@ -12,7 +12,7 @@
 $INFO_MODULE = [
     'name' => 'Iframe',
     'author' => '<a href="https://github.com/GIGABAIT-Official" target="_blank" rel="nofollow noopener">VertisanPRO</a>',
-    'module_ver' => '1.3.0',
+    'module_ver' => '1.3.1',
     'nml_ver' => '2.0.0-pr13',
 ];
 
