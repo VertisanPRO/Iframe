@@ -1,4 +1,4 @@
-# Iframe Module 1.3.1
+# Iframe Module 1.3.2
 ## Upload
 Upload "custom" and the "modules" folder to your NamelessMC Root directory (public_html, html, htdocs)
 
@@ -6,7 +6,7 @@ Upload "custom" and the "modules" folder to your NamelessMC Root directory (publ
 - Open your NamelessMC dashboard => Modules => Click on "Install"
 - Open the newly added sidebar entry and edit it to your liking
 
-Get your support here https://resourcemc.net/discord
+Get your support here https://pterodactyl-resources.com/discord
 
 ## Contribution
 ### Pull Requests

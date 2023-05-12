@@ -2,7 +2,7 @@
 /*
  *  Made by Samerton
  *  https://github.com/NamelessMC/Nameless/tree/v2/
- *  NamelessMC version 2.0.0-pr7
+ *  NamelessMC version 2.1.0
  *
  *  License: MIT
  *
@@ -14,11 +14,9 @@ $page_title = $IframeLanguage->get('general', 'title');
 
 if ($user->isLoggedIn()) {
     if (!$user->canViewStaffCP()) {
-
         Redirect::to(URL::build('/'));
     }
     if (!$user->isAdmLoggedIn()) {
-
         Redirect::to(URL::build('/panel/auth'));
     } else {
         if (!$user->hasPermission('admincp.iframe')) {
@@ -50,11 +48,8 @@ if (count($iframes)) {
             'page_id' => $iframe->page_id,
         ];
     }
-};
-
-$smarty->assign([
-    'IFRAME_LIST' => $iframes_list
-]);
+}
+;
 
 $smarty->assign([
     'SUBMIT' => $language->get('general', 'submit'),
@@ -72,19 +67,16 @@ $smarty->assign([
     'NO_IFRAME' => $IframeLanguage->get('general', 'no_iframe'),
     'IFRAME_SIZE' => $IframeLanguage->get('general', 'iframe_size'),
     'DESCRIPTION' => $language->get('admin', 'page_content'),
-    'FOOTER_DESCRIPTION' => $IframeLanguage->get('general', 'footer_description')
+    'FOOTER_DESCRIPTION' => $IframeLanguage->get('general', 'footer_description'),
+    'IFRAME_LIST' => $iframes_list
 ]);
 
-
 $template_file = 'Iframe/setting.tpl';
-
 if (isset($_POST['add'])) {
-
     if (Input::exists()) {
         $errors = [];
         try {
             if (Token::check(Input::get('token'))) {
-
                 $validation = Validate::check($_POST, [
                     'src' => [
                         'required' => true,
@@ -96,13 +88,10 @@ if (isset($_POST['add'])) {
                         'max' => 32
                     ]
                 ]);
-
                 $content = Output::getClean(Input::get('content'));
                 $footer_content = Output::getClean(Input::get('footer_content'));
-
                 if ($validation->passed()) {
                     try {
-
                         DB::getInstance()->insert('iframe_data', [
                             'name' => Input::get('name'),
                             'src' => Input::get('src'),
@@ -111,7 +100,6 @@ if (isset($_POST['add'])) {
                             'description' => $content,
                             'footer_description' => $footer_content
                         ]);
-
                         Session::flash('staff', $language->get('admin', 'page_created_successfully'));
                         Redirect::to(URL::build('/panel/iframe/setting', 'action=edit&id=' . $_GET['id']));
                     } catch (Exception $e) {
@@ -129,39 +117,31 @@ if (isset($_POST['add'])) {
     }
 } else {
     switch ($_GET['action']) {
-
         case 'delete':
             if (isset($_GET['name']) && is_numeric($_GET['name'])) {
                 try {
-
                     $page_id = DB::getInstance()->get('iframe_data', ['id', '=', $_GET['name']])->results();
                     $page_id = $page_id['0'];
                     $page_id = $page_id->page_id;
-
                     DB::getInstance()->delete('iframe_data', ['id', '=', $_GET['name']]);
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
-
                 Session::flash('staff', $language->get('admin', 'page_deleted_successfully'));
                 Redirect::to(URL::build('/panel/iframe/setting', 'action=edit&id=' . $page_id));
             }
             break;
-
         case 'frame_edit':
-
             if (!isset($_GET['name']) || !is_numeric($_GET['name'])) {
                 Redirect::to(URL::build('/panel/iframe'));
             }
             $edit_iframe = DB::getInstance()->get('iframe_data', ['id', '=', $_GET['name']])->results();
             $edit_iframe = $edit_iframe[0];
             $page_id = $edit_iframe->page_id;
-
             if (Input::exists()) {
                 $errors = [];
                 try {
                     if (Token::check(Input::get('token'))) {
-
                         $validation = Validate::check($_POST, [
                             'src' => [
                                 'required' => true,
@@ -173,13 +153,10 @@ if (isset($_POST['add'])) {
                                 'max' => 32
                             ]
                         ]);
-
                         $content = Output::getClean(Input::get('content'));
                         $footer_content = Output::getClean(Input::get('footer_content'));
-
                         if ($validation->passed()) {
                             try {
-
                                 DB::getInstance()->update('iframe_data', $edit_iframe->id, [
                                     'name' => Input::get('name'),
                                     'src' => Input::get('src'),
@@ -187,8 +164,6 @@ if (isset($_POST['add'])) {
                                     'description' => $content,
                                     'footer_description' => $footer_content
                                 ]);
-
-
                                 Session::flash('staff', $language->get('admin', 'page_updated_successfully'));
                                 Redirect::to(URL::build('/panel/iframe/setting', 'action=edit&id=' . $page_id));
                             } catch (Exception $e) {
@@ -204,7 +179,6 @@ if (isset($_POST['add'])) {
                     // Error
                 }
             }
-
             $smarty->assign([
                 'EDIT_NAME' => Output::getClean($edit_iframe->name),
                 'EDIT_SRC' => Output::getClean($edit_iframe->src),
@@ -213,10 +187,7 @@ if (isset($_POST['add'])) {
                 'FOOTER_CONTENT' => $edit_iframe->footer_description,
                 'BACK_LINK' => URL::build('/panel/iframe/setting', 'action=edit&id=' . $page_id)
             ]);
-
-
             $template_file = 'Iframe/edit_iframe.tpl';
-
             break;
     }
 }

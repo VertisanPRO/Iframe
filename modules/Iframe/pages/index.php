@@ -2,7 +2,7 @@
 /*
  *  Made by Samerton
  *  https://github.com/NamelessMC/Nameless/tree/v2/
- *  NamelessMC version 2.0.0-pr7
+ *  NamelessMC version 2.1.0
  *
  *  License: MIT
  *
@@ -12,7 +12,6 @@
 const PAGE = 'Iframe';
 
 $GLOBALS['IframeLanguage'] = $IframeLanguage;
-
 $page_title = $IframeLanguage->get('general', 'title');
 
 require_once(ROOT_PATH . '/core/templates/frontend_init.php');
@@ -39,7 +38,6 @@ if (count($iframes)) {
             'footer_description' => Output::getDecoded($iframe->footer_description)
         ];
     }
-
     $smarty->assign([
         'IFRAME_LIST' => $iframe_list
     ]);

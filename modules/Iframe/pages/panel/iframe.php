@@ -2,7 +2,7 @@
 /*
  *  Made by Samerton
  *  https://github.com/NamelessMC/Nameless/tree/v2/
- *  NamelessMC version 2.0.0-pr7
+ *  NamelessMC version 2.1.0
  *
  *  License: MIT
  *
@@ -34,7 +34,6 @@ const PANEL_PAGE = 'iframe_items';
 
 require_once(ROOT_PATH . '/core/templates/backend_init.php');
 
-
 $iframes_pages = DB::getInstance()->get('iframe_pages', ['id', '<>', 0])->results();
 $pages_list = [];
 if (count($iframes_pages)) {
@@ -48,11 +47,8 @@ if (count($iframes_pages)) {
             'url' => $page->url
         ];
     }
-};
-
-$smarty->assign([
-    'PAGES_LIST' => $pages_list
-]);
+}
+;
 
 $smarty->assign([
     'SUBMIT' => $language->get('general', 'submit'),
@@ -67,20 +63,17 @@ $smarty->assign([
     'URL' => $language->get('admin', 'page_path'),
     'PAGES' => $language->get('admin', 'pages'),
     'ADD_PAGE' => $language->get('admin', 'new_page'),
-    'NO_PAGES' => $language->get('admin', 'no_custom_pages')
+    'NO_PAGES' => $language->get('admin', 'no_custom_pages'),
+    'PAGES_LIST' => $pages_list
 ]);
-
 
 $template_file = 'Iframe/iframe.tpl';
 
-
 if (!isset($_GET['action'])) {
-
     if (Input::exists()) {
         $errors = [];
         try {
             if (Token::check(Input::get('token'))) {
-
                 $validation = Validate::check($_POST, [
                     'url' => [
                         'required' => true,
@@ -93,18 +86,13 @@ if (!isset($_GET['action'])) {
                         'max' => 32
                     ]
                 ]);
-
-                // validation matches '/'
                 if (preg_match('/^\//', Input::get('url'))) {
-
                     if ($validation->passed()) {
                         try {
-
                             DB::getInstance()->insert('iframe_pages', [
                                 'name' => Input::get('name'),
                                 'url' => Input::get('url')
                             ]);
-
                             Session::flash('staff', $language->get('admin', 'page_created_successfully'));
                             Redirect::to(URL::build('/panel/iframe'));
                         } catch (Exception $e) {
@@ -125,23 +113,18 @@ if (!isset($_GET['action'])) {
     }
 } else {
     switch ($_GET['action']) {
-
         case 'delete':
             if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                 try {
-
                     DB::getInstance()->delete('iframe_pages', ['id', '=', $_GET['id']]);
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
-
                 Session::flash('staff', $language->get('admin', 'page_deleted_successfully'));
                 Redirect::to(URL::build('/panel/iframe'));
             }
             break;
-
         case 'edit':
-
             if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
                 Redirect::to(URL::build('/panel/iframe'));
             }
@@ -149,14 +132,11 @@ if (!isset($_GET['action'])) {
             if (!count($edit_page)) {
                 Redirect::to(URL::build('/panel/iframe'));
             }
-
             $edit_page = $edit_page[0];
-
             if (Input::exists()) {
                 $errors = [];
                 try {
                     if (Token::check(Input::get('token'))) {
-
                         $validation = Validate::check($_POST, [
                             'url' => [
                                 'required' => true,
@@ -169,19 +149,13 @@ if (!isset($_GET['action'])) {
                                 'max' => 32
                             ]
                         ]);
-
-                        // validation matches '/'
                         if (preg_match('/^\//', Input::get('url'))) {
-
                             if ($validation->passed()) {
                                 try {
-
                                     DB::getInstance()->update('iframe_pages', $edit_page->id, [
                                         'name' => Input::get('name'),
                                         'url' => Input::get('url')
                                     ]);
-
-
                                     Session::flash('staff', $language->get('admin', 'page_updated_successfully'));
                                     Redirect::to(URL::build('/panel/iframe'));
                                 } catch (Exception $e) {
@@ -200,17 +174,12 @@ if (!isset($_GET['action'])) {
                     // Error
                 }
             }
-
             $smarty->assign([
                 'EDIT_NAME' => Output::getClean($edit_page->name),
                 'EDIT_URL' => Output::getClean($edit_page->url)
             ]);
-
-
             $template_file = 'Iframe/edit_page.tpl';
-
             break;
-
         default:
             Redirect::to(URL::build('/panel/iframe'));
     }

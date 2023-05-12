@@ -2,7 +2,7 @@
 /*
  *  Made by Samerton
  *  https://github.com/NamelessMC/Nameless/tree/v2/
- *  NamelessMC version 2.0.0-pr7
+ *  NamelessMC version 2.1.0
  *
  *  License: MIT
  *
@@ -14,16 +14,16 @@ class Iframe extends Module
 
     private $_language, $IframeLanguage;
 
-    public function __construct($language, $pages, $INFO_MODULE)
+    public function __construct($language, $pages)
     {
         $this->_language = $language;
 
         $this->IframeLanguage = $GLOBALS['IframeLanguage'];
 
-        $name = $INFO_MODULE['name'];
-        $author = $INFO_MODULE['author'];
-        $module_version = $INFO_MODULE['module_ver'];
-        $nameless_version = $INFO_MODULE['nml_ver'];
+        $name = 'Iframe';
+        $author = '<a href="https://github.com/VertisanPRO" target="_blank" rel="nofollow noopener">VertisanPRO</a>';
+        $module_version = '1.3.2';
+        $nameless_version = '2.1.0';
         parent::__construct($this, $name, $author, $module_version, $nameless_version);
 
         $pages->add('Iframe', '/panel/iframe', 'pages/panel/iframe.php');
@@ -51,7 +51,6 @@ class Iframe extends Module
 
     public function onEnable()
     {
-
         try {
             DB::getInstance()->createTable("iframe_pages", " `id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, `url` varchar(255) NOT NULL, PRIMARY KEY (`id`)");
             DB::getInstance()->createTable("iframe_data", " `id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, `src` varchar(5000) NOT NULL, `iframe_size` varchar(255) NOT NULL, `page_id` int(11) NOT NULL, `description` text NULL, `footer_description` text NULL, PRIMARY KEY (`id`)");
@@ -68,10 +67,12 @@ class Iframe extends Module
         }
     }
 
-    public function onDisable() {}
+    public function onDisable()
+    {
+    }
 
-    public function onPageLoad($user, $pages, $cache, $smarty, $navs, $widgets, $template) {
-
+    public function onPageLoad($user, $pages, $cache, $smarty, $navs, $widgets, $template)
+    {
         PermissionHandler::registerPermissions('Iframe', [
             'admincp.iframe' => $this->IframeLanguage->get('general', 'group_permission')
         ]);
@@ -80,20 +81,16 @@ class Iframe extends Module
         $order = 44;
 
         if (defined('BACK_END')) {
-
-            $title =  $this->IframeLanguage->get('general', 'title');
-
-
+            $title = $this->IframeLanguage->get('general', 'title');
             if ($user->hasPermission('admincp.iframe')) {
-
                 $navs[2]->add('iframe_divider', mb_strtoupper($title, 'UTF-8'), 'divider', 'top', null, $order);
-
                 $navs[2]->add('iframe_items', $title, URL::build('/panel/iframe'), 'top', null, $order + 0.1, $icon);
             }
         }
     }
 
-    public function getDebugInfo(): array {
-        return[];
+    public function getDebugInfo(): array
+    {
+        return [];
     }
 }
