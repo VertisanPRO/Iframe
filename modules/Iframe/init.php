@@ -9,9 +9,9 @@
  *  Iframe By VertisanPRO
  */
 
-$IframeLanguage = new Language(ROOT_PATH . '/modules/' . $INFO_MODULE['name'] . '/language', LANGUAGE);
+$IframeLanguage = new Language(ROOT_PATH . '/modules/' . 'Iframe' . '/language', LANGUAGE);
 $GLOBALS['IframeLanguage'] = $IframeLanguage;
 
-require_once(ROOT_PATH . '/modules/' . $INFO_MODULE['name'] . '/module.php');
+require_once(ROOT_PATH . '/modules/' . 'Iframe' . '/module.php');
 
 $module = new Iframe($language, $pages);
